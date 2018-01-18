@@ -23,6 +23,8 @@ Build another API Controller that associates those tasks with list
 - Have a Database table for both of your tasks and lists
 - use asyncrounous programming (async...await)
 - Deploy your applicaiton to Azure
+- Include Model Binding and Validation.
+- be sure to check for Model State
 - Remember about routing (hint: /api/[controller]), and constraint tokens {int:id} above any actions
 
 ## ReadMe
