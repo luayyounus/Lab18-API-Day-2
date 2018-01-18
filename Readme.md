@@ -18,12 +18,12 @@ Build another API Controller that associates those tasks with list
 2. Weekend Activities
 3. List of Procrastination 
 
-1. Use Postman or Fiddler to test your connections
-2. Have the Create/Read/Update/Delete commands for both Controllers
-3. Have a Database table for both of your tasks and lists
-3. use asyncrounous programming (async...await)
-3. Deploy your applicaiton to Azure
-4. Remember about routing (hint: /api/[controller]), and constraint tokens {int:id} above any actions
+- Use Postman or Fiddler to test your connections
+- Have the Create/Read/Update/Delete commands for both Controllers
+- Have a Database table for both of your tasks and lists
+- use asyncrounous programming (async...await)
+- Deploy your applicaiton to Azure
+- Remember about routing (hint: /api/[controller]), and constraint tokens {int:id} above any actions
 
 ## ReadMe
 A README is a module consumer's first -- and maybe only -- look into your creation. The consumer wants a module to fulfill their need, so you must explain exactly what need your module fills, and how effectively it does so.
