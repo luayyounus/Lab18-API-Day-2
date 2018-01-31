@@ -77,6 +77,39 @@ DELETE: api/Tasks/{id}
 ]
 ```
 
+
+
+Getting all Lists from the Database
+
+```yaml
+GET: api/TasksLists
+```
+
+Getting a single List by ID.
+
+```yaml
+GET: api/TasksLists/{id}
+```
+
+Post/Create a new List on the Database
+
+```yaml
+POST: api/TasksLists
+```
+
+Update a List
+
+```yaml
+PUT: api/TasksLists/{id}
+```
+
+Delete a List from the Database
+
+```yaml
+DELETE: api/TasksLists/{id}
+```
+
+
 #### List JSON Example
 ```json
 [
