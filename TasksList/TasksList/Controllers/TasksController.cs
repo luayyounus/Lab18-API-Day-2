@@ -19,29 +19,25 @@ namespace TasksList.Controllers
         {
             _context = context;
         }
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<List> Get()
-        {
-            return _context.Lists;
-        }
 
-        // GET api/<controller>/5
+        // GET: api/Tasks
+        [HttpGet]
+        public IEnumerable<Todo> Get() => _context.Tasks;
+
+        // GET: api/Tasks/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public Todo Get(int id)
         {
-            // Getting single todo
+            // Getting single task
             Todo todo = _context.Tasks.FirstOrDefault(l => l.Id == id);
 
-            // Checking if todo exists
-            if (todo != null)
-            {
-                return Ok(todo);
-            }
-            return BadRequest(id);
+            // Checking if task exists
+            if (todo == null) return new Todo();
+            
+            return todo;
         }
 
-        // POST api/<controller>
+        // POST: api/Tasks
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Todo todo)
         {
@@ -50,13 +46,16 @@ namespace TasksList.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _context.Tasks.AddAsync(todo);
-            await _context.SaveChangesAsync();
+            if (!_context.Tasks.Any(t => t.Id == todo.Id))
+            {
+                await _context.Tasks.AddAsync(todo);
+                await _context.SaveChangesAsync();
+            }
 
             return CreatedAtAction("Get", todo);
         }
 
-        // PUT api/<controller>/5
+        // PUT: api/Tasks/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]Todo todo)
         {
@@ -82,11 +81,10 @@ namespace TasksList.Controllers
             return Ok(result);
         }
 
-        // DELETE api/<controller>/5
+        // DELETE: api/Tasks/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-
             var result = _context.Tasks.FirstOrDefault(x => x.Id == id);
 
             if (result != null)

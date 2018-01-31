@@ -20,16 +20,13 @@ namespace TasksList.Controllers
             _context = context;
         }
 
-        // GET: api/<controller>
+        // GET: api/taskslist
         [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        public IEnumerable<List> Get() => _context.Lists;
 
-        // GET api/<controller>/5
+        // GET: api/taskslist/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public List Get(int id)
         {
             // Getting single playlist
             List tasksList = _context.Lists.FirstOrDefault(l => l.Id == id);
@@ -37,29 +34,49 @@ namespace TasksList.Controllers
             // Getting a list of todos associated with tasks list
             if (tasksList != null)
             {
-                tasksList.Todos = _context.Tasks.Where(t => t.ListId == id).ToList();
+                //tasksList.Todos = _context.Tasks.Where(t => t.ListId == id).ToList();
 
-                return Ok(tasksList);
+                return tasksList;
             }
-            return NotFound(id);
+            return new List{};
         }
 
-        // POST api/<controller>
+        // POST: api/taskslist
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<IActionResult> Post([FromBody]List list)
         {
+            if (!ModelState.IsValid) return BadRequest();
+            if (!_context.Lists.Any(x => x.Id == list.Id))
+            {
+                await _context.Lists.AddAsync(list);
+                await _context.SaveChangesAsync();
+            }
+            return CreatedAtAction("Get", list);
         }
 
-        // PUT api/<controller>/5
+        // PUT: api/taskslist/{id}
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> Put(int id, [FromBody]List newList)
         {
+            if (!ModelState.IsValid) return BadRequest();
+            List taskList = _context.Lists.FirstOrDefault(l => l.Id == id);
+            if (taskList != null)
+            {
+                taskList = newList;
+                await _context.Lists.AddAsync(taskList);
+                await _context.SaveChangesAsync();
+            }
+            return Ok();
         }
 
-        // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE: api/taskslist/{id}
+        public async Task<IActionResult> Delete(int id)
         {
+            List deleteItem = _context.Lists.FirstOrDefault(l => l.Id == id);
+            if(deleteItem != null) _context.Lists.Remove(deleteItem);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }
