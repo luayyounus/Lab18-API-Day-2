@@ -10,7 +10,7 @@ namespace TasksList.Data
     {
         public TasksListContext(DbContextOptions<TasksListContext> options) : base(options) { }
 
-        internal DbSet<Todo> Tasks { get; set; }
-        internal DbSet<List> Lists { get; set; }
+        public DbSet<Todo> Tasks { get; set; }
+        public DbSet<List> Lists { get; set; }
     }
 }
